@@ -128,13 +128,6 @@ HotMod::HotMod()
 	pblock2 = NULL;
 	tmControl = NULL;
 	hotDesc.MakeAutoParamBlocks(this);
-
-#if MAXVERSION > 2021
-	// JW added: without this, newly created modifier would just be named "Object" in Max2022+
-	SetName( hotDesc.ClassName() );
-	//SetName( hotDesc.NonLocalizedClassName() );
-#endif
-
 }
 
 HotMod::~HotMod()

@@ -118,7 +118,7 @@ public:
 
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
-	void GetClassName(TSTR& s, bool localized)
+	void GetClassName(TSTR& s, bool localized) const
 	{ 
 		UNUSED_PARAM(localized);
 		s = GetString(IDS_RB_HOT_OSM_CLASS); 	
@@ -135,7 +135,7 @@ public:
 
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
-	const TCHAR *GetObjectName( bool localized ) 
+	const TCHAR *GetObjectName( bool localized ) const
 	{ 
 		UNUSED_PARAM(localized);
 		return GetString(IDS_RB_HOT);
