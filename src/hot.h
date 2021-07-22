@@ -135,15 +135,15 @@ public:
 
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
-	const MCHAR *GetObjectName( bool localized ) 
+	const TCHAR *GetObjectName( bool localized ) 
 	{ 
 		UNUSED_PARAM(localized);
 		return GetString(IDS_RB_HOT);
 	}
 #elif MAXVERSION > 2012
-	const MCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+	const TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
 #else
-	MCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+	TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
 #endif
 
 	void BeginEditParams(IObjParam *ip, ULONG flags, Animatable *prev);
@@ -163,8 +163,8 @@ public:
 	
 	// FPMixinInterface
 	float fnGetPointJminus(Point2 p);
-	void fnSaveJminusMap(const MCHAR *filename);
-	void fnSaveHeightMap(const MCHAR *filename);
+	void fnSaveJminusMap(const TCHAR *filename);
+	void fnSaveHeightMap(const TCHAR *filename);
 	Point3 fnGetPointEminus(Point2 p);
 	/*
 	BaseInterface* GetInterface(Interface_ID id) 
