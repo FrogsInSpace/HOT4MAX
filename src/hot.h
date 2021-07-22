@@ -115,13 +115,35 @@ public:
 
 	// From Animatable
 	void DeleteThis() { delete this; }
-	void GetClassName(TSTR& s) { s= GetString(IDS_RB_HOT_OSM_CLASS); }
+
+#if MAXVERSION > 2021
+	// JW added: 2022+ adds localized flag 
+	void GetClassName(TSTR& s, bool localized)
+	{ 
+		UNUSED_PARAM(localized);
+		s = GetString(IDS_RB_HOT_OSM_CLASS); 	
+	}
+#else
+	void GetClassName(TSTR& s) { s = GetString(IDS_RB_HOT_OSM_CLASS); }
+
+#endif
+		
+
+
 	virtual Class_ID ClassID() { return HOT4MAX_CLASS_ID;}
 	RefTargetHandle Clone(RemapDir& remap);
-#if MAXVERSION > 2012
-	const TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+
+#if MAXVERSION > 2021
+	// JW added: 2022+ adds localized flag 
+	const MCHAR *GetObjectName( bool localized ) 
+	{ 
+		UNUSED_PARAM(localized);
+		return GetString(IDS_RB_HOT);
+	}
+#elif MAXVERSION > 2012
+	const MCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
 #else
-	TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+	MCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
 #endif
 
 	void BeginEditParams(IObjParam *ip, ULONG flags, Animatable *prev);
@@ -141,8 +163,8 @@ public:
 	
 	// FPMixinInterface
 	float fnGetPointJminus(Point2 p);
-	void fnSaveJminusMap(const TCHAR *filename);
-	void fnSaveHeightMap(const TCHAR *filename);
+	void fnSaveJminusMap(const MCHAR *filename);
+	void fnSaveHeightMap(const MCHAR *filename);
 	Point3 fnGetPointEminus(Point2 p);
 	/*
 	BaseInterface* GetInterface(Interface_ID id) 
@@ -199,9 +221,16 @@ private:
 	virtual void SetReference(int i, RefTargetHandle rtarg);
 
 public:
-	int NumSubs() {return 2;}
-	Animatable* SubAnim(int i) {return GetReference(i);};
+	int NumSubs() {	return 2;	}
+
+	Animatable* SubAnim(int i) {		return GetReference(i);		}
+
+#if MAXVERSION > 2021
+	// JW added: 2022+ adds localized flag 
+	TSTR SubAnimName(int i, bool localized);
+#else
 	TSTR SubAnimName(int i);
+#endif
 
 	// Ocean.h stuff
 
@@ -283,7 +312,15 @@ class HotClassDesc:public ClassDesc2
 public:
 	int IsPublic() { return 1; }
 	void *Create(BOOL loading = FALSE) { return new HotMod; }
+
+
 	const TCHAR *ClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
+
+#if MAXVERSION > 2021
+	// JW added: Max 2022 SDK adds NonLocalizedClassName() to the class description
+	const TCHAR *NonLocalizedClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
+#endif	
+
 	SClass_ID SuperClassID() { return OSM_CLASS_ID; }
 	Class_ID ClassID() { return HOT4MAX_CLASS_ID; }
 	const TCHAR *Category() { return GetString(IDS_RB_HOTMOD);}

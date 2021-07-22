@@ -1,6 +1,9 @@
 Author
 Guillaume Plourde, gplourde@gmail.com
 
+3ds Max 2022+ compatibility
+Josef 'spacefrog' Wienerroither, spacefrog@chello.at
+
 Installation
 
     Install the Visual c++ Redistributable 2012 for your system. Max 2018 and 2019 require the 2017 version Redist.

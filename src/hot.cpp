@@ -128,6 +128,13 @@ HotMod::HotMod()
 	pblock2 = NULL;
 	tmControl = NULL;
 	hotDesc.MakeAutoParamBlocks(this);
+
+#if MAXVERSION > 2021
+	// JW added: without this, newly created modifier would just be named "Object" in Max2022+
+	SetName( hotDesc.ClassName() );
+	//SetName( hotDesc.NonLocalizedClassName() );
+#endif
+
 }
 
 HotMod::~HotMod()
@@ -303,8 +310,14 @@ void HotMod::UpdateOcean(TimeValue t)
 
 void HotMod::ModifyTriObject(TimeValue t, ModContext &mc, TriObject* obj, Interval iv, Point2 center)
 {
+#if MAXVERSION > 2021
+	// JW changed: GetMasterScale has been deprecated and replaced by inclusive language version
+	const float envGlobalScale = GetSystemUnitScale(UNITS_METERS);
+	const float oneOverGlobalScale = scale / GetSystemUnitScale(UNITS_METERS);
+#else
 	const float envGlobalScale = GetMasterScale(UNITS_METERS);
 	const float oneOverGlobalScale = scale / GetMasterScale(UNITS_METERS);
+#endif
 
 	obj->ReadyChannelsForMod(GEOM_CHANNEL);
 	obj->ReadyChannelsForMod(VERTCOLOR_CHANNEL);
@@ -509,12 +522,25 @@ void HotMod::SetReference(int i, RefTargetHandle rtarg)
 	}
 }
 
-TSTR HotMod::SubAnimName(int i) 
+#if MAXVERSION > 2021
+// JW added: Max 2022 adds the localized flag to the signature
+TSTR HotMod::SubAnimName(int i, bool localized) 
 {
-	switch (i) {
-	case HOT_PBLOCK_REF: return TSTR(GetString(IDS_RB_PARAMETERS)); break;
-	case TM_REF: return TSTR(GetString(IDS_CENTER)); break;
-	default: return TSTR(_T("")); break;
+	UNUSED_PARAM(localized);
+#else
+TSTR HotMod::SubAnimName(int i)
+{
+#endif
+	switch (i)
+	{
+		case HOT_PBLOCK_REF:
+			return TSTR(GetString(IDS_RB_PARAMETERS));
+
+		case TM_REF:
+			return TSTR(GetString(IDS_CENTER));
+
+		default:
+			return TSTR(_T("")); break;
 	}
 };
 
@@ -663,8 +689,14 @@ Point3 HotMod::fnGetPointEminus(Point2 p)
 
 HotDeformer::HotDeformer(drw::Ocean* _o, drw::OceanContext* _oc, float scale, bool interp, bool chop, ModContext &mc, Point2 p)
 {
+#if MAXVERSION > 2021
+	// JW changed: GetMasterScale has been deprecated and replaced by inclusive language version
+	envGlobalScale = GetSystemUnitScale(UNITS_METERS);
+	oneOverGlobalScale = scale / GetSystemUnitScale(UNITS_METERS);
+#else
 	envGlobalScale = GetMasterScale(UNITS_METERS);
 	oneOverGlobalScale = scale / GetMasterScale(UNITS_METERS);
+#endif
 	
 	_ocean = _o;
 	_ocean_context = _oc;
@@ -703,7 +735,7 @@ int HotMod::HitTest(
 		IPoint2 *p, ViewExp *vpt, ModContext* mc)
 	{
 
-#if MAXVERSION > MAX2012
+#if MAXVERSION > 2012
 	if ( ! vpt || ! vpt->IsAlive() )
 	{
 		// why are we here
@@ -737,7 +769,7 @@ int HotMod::Display(
 		TimeValue t, INode* inode, ViewExp *vpt, 
 		int flagst, ModContext *mc)
 	{
-#if MAXVERSION > MAX2012
+#if MAXVERSION > 2012
 	if ( ! vpt || ! vpt->IsAlive() )
 	{
 		// why are we here
@@ -753,13 +785,17 @@ int HotMod::Display(
 
 	gw->setRndLimits((savedLimits = gw->getRndLimits()) & ~GW_ILLUM);
 	gw->setTransform(tm);
-	if (ip && ip->GetSubObjectLevel() == 1) {
+
+	if (ip && ip->GetSubObjectLevel() == 1) 
+	{
 		//gw->setColor(LINE_COLOR, (float)1.0, (float)1.0, (float)0.0);
 		gw->setColor(LINE_COLOR,GetUIColor(COLOR_SEL_GIZMOS));
-	} else {
+	} 
+	else 
+	{
 		//gw->setColor(LINE_COLOR, (float).85, (float).5, (float)0.0);
 		gw->setColor(LINE_COLOR,GetUIColor(COLOR_GIZMOS));
-		}
+	}
 	
 	DrawCenterMark(DrawLineProc(gw),*mc->box);
 	
@@ -772,7 +808,7 @@ void HotMod::GetWorldBoundBox(
 		Box3& box, ModContext *mc)
 	{
 
-#if MAXVERSION > MAX2012
+#if MAXVERSION > 2012
 	if ( ! vpt || ! vpt->IsAlive() )
 	{
 		// why are we here
@@ -825,18 +861,17 @@ void HotMod::GetSubObjectTMs(
 
 void HotMod::ActivateSubobjSel(int level, XFormModes& modes)
 	{
-	switch (level) {
-		case 1: // Mirror center
-			modes = XFormModes(moveMode,rotMode,nuscaleMode,uscaleMode,squashMode,NULL);
-			break;		
+		switch (level) 
+		{
+			case 1: // Mirror center
+				modes = XFormModes(moveMode,rotMode,nuscaleMode,uscaleMode,squashMode,NULL);
+				break;		
 		}
-	NotifyDependents(FOREVER,PART_DISPLAY,REFMSG_CHANGE);
+		
+		NotifyDependents(FOREVER,PART_DISPLAY,REFMSG_CHANGE);
 	}
 
-int HotMod::NumSubObjTypes() 
-{ 
-	return 1;
-}
+int HotMod::NumSubObjTypes() { 	return 1;	}
 
 ISubObjType *HotMod::GetSubObjType(int i) 
 {	
@@ -876,8 +911,10 @@ __declspec( dllexport ) ClassDesc *LibClassDesc(int i)
 {
 	switch(i)
 	{
-		case 0: return GetHotModDesc();	
-		default: return 0;
+		case 0: 
+			return GetHotModDesc();	
+		default: 
+			return 0;
 	}
 }
 __declspec( dllexport ) const TCHAR *LibDescription()
