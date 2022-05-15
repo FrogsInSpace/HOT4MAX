@@ -2,9 +2,9 @@
 
 pushd ..\
 
-set SdkVersion=2022
-set Toolset=v141
-set MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin"
+set SdkVersion=2023
+set Toolset=v142
+set MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\15.0\Bin"
 
 set MaxSdkDir=..\3rdparty\Autodesk\%SdkVersion%
 set Dependencies=comctl32.lib;mnmath.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;poly.lib;mesh.lib;bmm.lib;assetmanagement.lib;blitz.lib;fftw3f.lib
