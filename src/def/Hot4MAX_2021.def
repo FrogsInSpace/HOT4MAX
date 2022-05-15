@@ -1,4 +1,4 @@
-LIBRARY hotOcean_Max_2021.dlm
+LIBRARY
 EXPORTS
    LibDescription    @1       PRIVATE
    LibNumberClasses  @2       PRIVATE
