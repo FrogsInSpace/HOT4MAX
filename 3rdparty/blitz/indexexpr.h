@@ -38,7 +38,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/slice.h>
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 template<int N>
 class IndexPlaceholder 
@@ -192,7 +192,7 @@ public:
   { BZPRECHECK(0,"Stencils of index expressions are not implemented"); 
     return T_range_result(); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, prettyPrintFormat&) const {
+    void prettyPrint(std::string &str, prettyPrintFormat&) const {
         // NEEDS_WORK-- do real formatting for reductions
         str += "index-expr[NEEDS_WORK]";
     }
@@ -209,17 +209,18 @@ public:
 	   class T11 = nilArraySection>
   class SliceInfo {
   public:
-    static const int new_rank = (N>0) ? ArraySectionInfo<T1>::rank : 0
-      + (N>1) ? ArraySectionInfo<T2>::rank : 0
-      + (N>2) ? ArraySectionInfo<T3>::rank : 0
-      + (N>4) ? ArraySectionInfo<T4>::rank : 0
-      + (N>5) ? ArraySectionInfo<T5>::rank : 0
-      + (N>6) ? ArraySectionInfo<T6>::rank : 0
-      + (N>7) ? ArraySectionInfo<T7>::rank : 0
-      + (N>8) ? ArraySectionInfo<T8>::rank : 0
-      + (N>9) ? ArraySectionInfo<T9>::rank : 0
-      + (N>10) ? ArraySectionInfo<T10>::rank : 0
-      + (N>11) ? ArraySectionInfo<T11>::rank : 0;
+    static const int new_rank = 
+        ((N>0) ? ArraySectionInfo<T1>::rank : 0)
+        + ((N>1) ? ArraySectionInfo<T2>::rank : 0)
+        + ((N>2) ? ArraySectionInfo<T3>::rank : 0)
+        + ((N>3) ? ArraySectionInfo<T4>::rank : 0)
+        + ((N>4) ? ArraySectionInfo<T5>::rank : 0)
+        + ((N>5) ? ArraySectionInfo<T6>::rank : 0)
+        + ((N>6) ? ArraySectionInfo<T7>::rank : 0)
+        + ((N>7) ? ArraySectionInfo<T8>::rank : 0)
+        + ((N>8) ? ArraySectionInfo<T9>::rank : 0)
+        + ((N>9) ? ArraySectionInfo<T10>::rank : 0)
+        + ((N>10) ? ArraySectionInfo<T11>::rank : 0);
     typedef IndexPlaceholder<new_rank> T_slice;
   };
 
@@ -251,7 +252,7 @@ typedef IndexPlaceholder<10> eleventhIndex;
 
 #ifndef BZ_NO_TENSOR_INDEX_OBJECTS
 
-BZ_NAMESPACE(tensor)
+namespace tensor {
     _bz_global blitz::IndexPlaceholder<0> i;
     _bz_global blitz::IndexPlaceholder<1> j;
     _bz_global blitz::IndexPlaceholder<2> k;
@@ -264,11 +265,11 @@ BZ_NAMESPACE(tensor)
     _bz_global blitz::IndexPlaceholder<9> r;
     _bz_global blitz::IndexPlaceholder<10> s;
     _bz_global blitz::IndexPlaceholder<11> t;
-BZ_NAMESPACE_END // tensor
+} // tensor
 
 #endif
 
-BZ_NAMESPACE_END
+}
 
 #endif // BZ_INDEXEXPR_H
 

@@ -37,6 +37,7 @@
 #include <blitz/array/domain.h>
 #include <blitz/array/slice.h>
 #include <blitz/bounds.h>
+#include <blitz/tv2fastiter.h> 
 
 /*
  * The array expression templates iterator interface is followed by
@@ -59,7 +60,7 @@
  * _bz_FunctorExpr3                   "
  */
 
-BZ_NAMESPACE(blitz)
+namespace blitz {
 
 #define BZ_MAX(a,b) (a)>(b) ? (a) : (b)
 #define BZ_MIN(a,b) (a)<(b) ? (a) : (b)
@@ -265,13 +266,13 @@ public:
     bool isStride(int rank, diffType stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str) const
+    void prettyPrint(std::string &str) const
     {
         prettyPrintFormat format(true);  // Terse formatting by default
         iter_.prettyPrint(str, format);
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     { iter_.prettyPrint(str, format); }
 
@@ -733,7 +734,7 @@ public:
     bool isStride(int rank, diffType stride) const
     { return iter_.isStride(rank,stride); }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     { T_op::prettyPrint(str, format, iter_); }
 
@@ -1051,7 +1052,7 @@ public:
         iter2_.moveTo(i);
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         T_op::prettyPrint(str, format, iter1_, iter2_);
@@ -1448,7 +1449,7 @@ public:
         iter3_.moveTo(i);
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         T_op::prettyPrint(str, format, iter1_, iter2_, iter3_);
@@ -1732,7 +1733,7 @@ public:
   { return iter1_.isVectorAligned(offset) &&
       iter2_.isVectorAligned(offset) &&
       iter3_.isVectorAligned(offset) &&
-      iter3_.isVectorAligned(offset); }
+      iter4_.isVectorAligned(offset); }
 
   template<int N>
   T_range_result operator()(const RectDomain<rank_>& d) const
@@ -1919,7 +1920,7 @@ public:
         iter4_.moveTo(i);
     }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         T_op::prettyPrint(str, format, iter1_, iter2_, iter3_, iter4_);
@@ -2100,7 +2101,7 @@ public:
     template<int N_rank>
     void moveTo(const TinyVector<int,N_rank>&) const { }
 
-    void prettyPrint(BZ_STD_SCOPE(string) &str, 
+    void prettyPrint(std::string &str, 
         prettyPrintFormat& format) const
     {
         if (format.tersePrintingSelected())
@@ -2141,7 +2142,7 @@ protected:
 };
     
 
-BZ_NAMESPACE_END
+}
 
 #include <blitz/array/asexpr.h>
 
