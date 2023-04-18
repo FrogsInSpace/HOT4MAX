@@ -67,14 +67,14 @@ static INT_PTR CALLBACK AboutDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 		case WM_NOTIFY:
 			switch (((NMHDR *)lParam)->code)
 			{
-    
+	
 				case NM_CLICK:
 
 				case NM_RETURN:
 				{
 					NMLINK* pNMLink = (NMLINK*)lParam;
 					LITEM item = pNMLink->item;
-            
+			
 					ShellExecuteW(hWnd, L"open", item.szUrl, NULL, NULL, SW_SHOW);
 					EndDialog(hWnd,1);
 					break;
@@ -256,7 +256,13 @@ Interval HotMod::GetValidity(TimeValue t)
 	pblock2->GetValue(hot_foamscale, t, foam_scale, iv);
 
 	// Center
+#if MAX_VERSION_MAJOR >= 24
+	// Matrix3 is now initalized by default
+	Matrix3 mat = Matrix3();
+#else
 	Matrix3 mat(1);
+#endif
+
 	if (tmControl) tmControl->GetValue(t, &mat, iv, CTRL_RELATIVE);
 
 	return iv;
@@ -270,10 +276,10 @@ void HotMod::UpdateOcean(TimeValue t)
 	float stepsize = (float)size / (float)gridres;
 
 	bool do_jacobian = true;
-    bool do_normals  = false; //true && !do_chop;
+	bool do_normals  = false; //true && !do_chop;
 
 	if (!_ocean || _ocean_needs_rebuild)
-    {
+	{
 		if (_ocean) delete _ocean;
 		if (_ocean_context) delete _ocean_context;
 
@@ -292,13 +298,13 @@ void HotMod::UpdateOcean(TimeValue t)
 			seed
 			);
 
-        _ocean_scale = _ocean->get_height_normalize_factor();
-        _ocean_context = _ocean->new_context(true, do_chop, do_normals, do_jacobian);
+		_ocean_scale = _ocean->get_height_normalize_factor();
+		_ocean_context = _ocean->new_context(true, do_chop, do_normals, do_jacobian);
 
 		_ocean_needs_rebuild = false;
-     }
+	 }
 
-    _ocean->update(time, *_ocean_context, true, do_chop, do_normals, do_jacobian, _ocean_scale * waveHeigth, choppiness);
+	_ocean->update(time, *_ocean_context, true, do_chop, do_normals, do_jacobian, _ocean_scale * waveHeigth, choppiness);
 }
 
 void HotMod::ModifyTriObject(TimeValue t, ModContext &mc, TriObject* obj, Interval iv, Point2 center)
@@ -368,7 +374,13 @@ void HotMod::ModifyTriObject(TimeValue t, ModContext &mc, TriObject* obj, Interv
 Matrix3 HotMod::CompMatrix (TimeValue t, INode *inode, ModContext *mc, Interval *validity) 
 {
 	Interval iv;
+#if MAX_VERSION_MAJOR >= 24
+	// Matrix3 is now initalized by default
+	Matrix3 tm = Matrix3();		
+#else
 	Matrix3 tm(1);		
+#endif
+
 	if (tmControl) tmControl->GetValue(t,&tm,iv,CTRL_RELATIVE);
 	if (mc && mc->tm) tm = tm * Inverse(*(mc->tm));
 	if (inode) 
@@ -391,11 +403,11 @@ void HotMod::ModifyObject(TimeValue t, ModContext &mc, ObjectState *os, INode *n
 	int gridres  = 1 << int((int)resolution);
 	float stepsize = (float)size / (float)gridres;
 
-    bool do_jacobian = true;
-    bool do_normals  = false; //true && !do_chop;
+	bool do_jacobian = true;
+	bool do_normals  = false; //true && !do_chop;
 
 	if (!_ocean || _ocean_needs_rebuild)
-    {
+	{
 		if (_ocean) delete _ocean;
 		if (_ocean_context) delete _ocean_context;
 
@@ -414,11 +426,11 @@ void HotMod::ModifyObject(TimeValue t, ModContext &mc, ObjectState *os, INode *n
 			seed
 			);
 
-        _ocean_scale = _ocean->get_height_normalize_factor();
-        _ocean_context = _ocean->new_context(true, do_chop, do_normals, do_jacobian);
+		_ocean_scale = _ocean->get_height_normalize_factor();
+		_ocean_context = _ocean->new_context(true, do_chop, do_normals, do_jacobian);
 		_ocean_needs_rebuild = false;
 		updateNeeded = true;
-     }
+	 }
 
 	if (updateNeeded ||
 		PRV_windSpeed != windSpeed ||
@@ -697,7 +709,13 @@ HotDeformer::HotDeformer(drw::Ocean* _o, drw::OceanContext* _oc, float scale, bo
 	CenterOffset = p;
 }
 
+
+#if MAX_VERSION_MAJOR >= 24
+	// non-constant version of Deformer::Map() is deprecated
+Point3 HotDeformer::Map(int i, Point3 p) const
+#else
 Point3 HotDeformer::Map(int i, Point3 p)
+#endif
 {
 	drw::EvalData evaldata; 
 

@@ -292,7 +292,13 @@ public:
 	HotDeformer() {}
 	HotDeformer(drw::Ocean* _ocean, drw::OceanContext* _ocean_context, float globalScale, bool do_interpolation, bool do_chop, ModContext &mc, Point2 CenterOffset);
 
+#if MAX_VERSION_MAJOR >= 24
+	// non-constant version of Deformer::Map() is deprecated
+	Point3 Map(int i, Point3 p) const;
+#else
 	Point3 Map(int i, Point3 p);
+#endif
+
 
 private:
 	drw::Ocean        *_ocean;

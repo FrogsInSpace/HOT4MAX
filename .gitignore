@@ -41,11 +41,13 @@ Icon
 3rdparty/Autodesk
 3rdparty/loki-0.1.7
 Output/
+_Output/
 plugins/
 release/
 scripts/
 
-
+.vs/
+obj/
 vs2012/.vs/
 *.suo
 *.user
