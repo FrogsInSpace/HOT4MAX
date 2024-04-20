@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HOT4Max", "HOT4Max.vcxproj", "{0FA468E9-898D-492D-830E-116F684BCB71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Hybrid-Max2025|x64 = Hybrid-Max2025|x64
+		Release-Max2017|x64 = Release-Max2017|x64
+		Release-Max2018|x64 = Release-Max2018|x64
+		Release-Max2019|x64 = Release-Max2019|x64
+		Release-Max2020|x64 = Release-Max2020|x64
+		Release-Max2021|x64 = Release-Max2021|x64
+		Release-Max2022|x64 = Release-Max2022|x64
+		Release-Max2023|x64 = Release-Max2023|x64
+		Release-Max2024|x64 = Release-Max2024|x64
+		Release-Max2025|x64 = Release-Max2025|x64
+		Release-Max2026|x64 = Release-Max2026|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Hybrid-Max2025|x64.ActiveCfg = Hybrid-Max2025|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Hybrid-Max2025|x64.Build.0 = Hybrid-Max2025|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2017|x64.ActiveCfg = Release-Max2017|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2017|x64.Build.0 = Release-Max2017|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2018|x64.ActiveCfg = Release-Max2018|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2018|x64.Build.0 = Release-Max2018|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2019|x64.ActiveCfg = Release-Max2019|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2019|x64.Build.0 = Release-Max2019|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2020|x64.ActiveCfg = Release-Max2020|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2020|x64.Build.0 = Release-Max2020|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2021|x64.ActiveCfg = Release-Max2021|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2021|x64.Build.0 = Release-Max2021|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2022|x64.ActiveCfg = Release-Max2022|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2022|x64.Build.0 = Release-Max2022|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2023|x64.ActiveCfg = Release-Max2023|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2023|x64.Build.0 = Release-Max2023|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2024|x64.ActiveCfg = Release-Max2024|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2024|x64.Build.0 = Release-Max2024|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2025|x64.ActiveCfg = Release-Max2025|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2025|x64.Build.0 = Release-Max2025|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2026|x64.ActiveCfg = Release-Max2026|x64
+		{0FA468E9-898D-492D-830E-116F684BCB71}.Release-Max2026|x64.Build.0 = Release-Max2026|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EFBDA47-478A-41AE-A5F4-58A1C360CC71}
+	EndGlobalSection
+EndGlobal

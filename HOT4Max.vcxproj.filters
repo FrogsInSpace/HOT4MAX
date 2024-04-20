@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\hot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\hot.h" />
+    <ClInclude Include="src\paramblock.h" />
+    <ClInclude Include="src\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{78d25ddf-a563-47bd-93de-d371e8a4cdb5}</UniqueIdentifier>
+      <Extensions>.bmp</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\res\twitter.bmp">
+      <Filter>res</Filter>
+    </Image>
+    <Image Include="src\res\hot4max.bmp">
+      <Filter>res</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\hot.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="license-fftw.txt" />
+  </ItemGroup>
+</Project>

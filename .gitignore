@@ -47,6 +47,7 @@ release/
 scripts/
 
 .vs/
+x64/
 obj/
 vs2012/.vs/
 *.suo
@@ -54,3 +55,4 @@ vs2012/.vs/
 *.sdf
 *.db
 *.ipch
+*.aps

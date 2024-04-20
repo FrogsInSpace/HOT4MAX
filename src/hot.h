@@ -59,7 +59,7 @@ float MAX_RESOLUTION = 12.0f;
 
 #define HOT_INTERFACE Interface_ID(0x13c47c57, 0x7a020d7)
 
-TCHAR *GetString(int id)
+TCHAR* GetString(int id)
 {
 	static TCHAR buf[256];
 
@@ -69,14 +69,14 @@ TCHAR *GetString(int id)
 	return NULL;
 }
 
-class IHoudiniOcean: public Modifier, public FPMixinInterface
+class IHoudiniOcean : public Modifier, public FPMixinInterface
 {
 public:
 
 	enum { hot_getpointjminus, hot_savejminusmap, hot_saveheightmap, hot_getpointeminus };
 
 	BEGIN_FUNCTION_MAP
-	FN_1(hot_getpointjminus, TYPE_FLOAT, fnGetPointJminus, TYPE_POINT2);
+		FN_1(hot_getpointjminus, TYPE_FLOAT, fnGetPointJminus, TYPE_POINT2);
 	VFN_1(hot_savejminusmap, fnSaveJminusMap, TYPE_STRING);
 	VFN_1(hot_saveheightmap, fnSaveHeightMap, TYPE_STRING);
 	FN_1(hot_getpointeminus, TYPE_POINT3, fnGetPointEminus, TYPE_POINT2);
@@ -86,8 +86,8 @@ public:
 
 
 	virtual float fnGetPointJminus(Point2 p) = 0;
-	virtual void fnSaveJminusMap(const TCHAR *filename) = 0;
-	virtual void fnSaveHeightMap(const TCHAR *filename) = 0;
+	virtual void fnSaveJminusMap(const TCHAR* filename) = 0;
+	virtual void fnSaveHeightMap(const TCHAR* filename) = 0;
 	virtual Point3 fnGetPointEminus(Point2 p) = 0;
 };
 
@@ -97,21 +97,21 @@ public:
 	HotMod();
 	~HotMod();
 
-	IParamBlock2 *pblock2;
-	Control *tmControl;
+	IParamBlock2* pblock2;
+	Control* tmControl;
 
-	static IObjParam *ip;
-	static HotMod *editMod;
-	static MoveModBoxCMode *moveMode;
-	static RotateModBoxCMode *rotMode;
-	static UScaleModBoxCMode *uscaleMode;
-	static NUScaleModBoxCMode *nuscaleMode;
-	static SquashModBoxCMode *squashMode;	
+	static IObjParam* ip;
+	static HotMod* editMod;
+	static MoveModBoxCMode* moveMode;
+	static RotateModBoxCMode* rotMode;
+	static UScaleModBoxCMode* uscaleMode;
+	static NUScaleModBoxCMode* nuscaleMode;
+	static SquashModBoxCMode* squashMode;
 
 	int version;
 
 	Interval GetValidity(TimeValue t);
-	Matrix3 CompMatrix (TimeValue t, INode *inode, ModContext *mc, Interval *validity=NULL);
+	Matrix3 CompMatrix(TimeValue t, INode* inode, ModContext* mc, Interval* validity = NULL);
 
 	// From Animatable
 	void DeleteThis() { delete this; }
@@ -119,35 +119,35 @@ public:
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
 	void GetClassName(TSTR& s, bool localized) const
-	{ 
+	{
 		UNUSED_PARAM(localized);
-		s = GetString(IDS_RB_HOT_OSM_CLASS); 	
+		s = GetString(IDS_RB_HOT_OSM_CLASS);
 	}
 #else
 	void GetClassName(TSTR& s) { s = GetString(IDS_RB_HOT_OSM_CLASS); }
 
 #endif
-		
 
 
-	virtual Class_ID ClassID() { return HOT4MAX_CLASS_ID;}
+
+	virtual Class_ID ClassID() { return HOT4MAX_CLASS_ID; }
 	RefTargetHandle Clone(RemapDir& remap);
 
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
-	const TCHAR *GetObjectName( bool localized ) const
-	{ 
+	const TCHAR* GetObjectName(bool localized) const
+	{
 		UNUSED_PARAM(localized);
 		return GetString(IDS_RB_HOT);
 	}
 #elif MAXVERSION > 2012
-	const TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+	const TCHAR* GetObjectName() { return GetString(IDS_RB_HOT); }
 #else
-	TCHAR *GetObjectName() { return GetString(IDS_RB_HOT);}
+	TCHAR* GetObjectName() { return GetString(IDS_RB_HOT); }
 #endif
 
-	void BeginEditParams(IObjParam *ip, ULONG flags, Animatable *prev);
-	void EndEditParams(IObjParam *ip, ULONG flags, Animatable *next);
+	void BeginEditParams(IObjParam* ip, ULONG flags, Animatable* prev);
+	void EndEditParams(IObjParam* ip, ULONG flags, Animatable* next);
 	CreateMouseCallBack* GetCreateMouseCallBack() { return NULL; }
 
 	// From Paramblock2
@@ -160,57 +160,57 @@ public:
 	{
 		return (pblock2->ID() == id) ? pblock2 : NULL;
 	}
-	
+
 	// FPMixinInterface
 	float fnGetPointJminus(Point2 p);
-	void fnSaveJminusMap(const TCHAR *filename);
-	void fnSaveHeightMap(const TCHAR *filename);
+	void fnSaveJminusMap(const TCHAR* filename);
+	void fnSaveHeightMap(const TCHAR* filename);
 	Point3 fnGetPointEminus(Point2 p);
 	/*
-	BaseInterface* GetInterface(Interface_ID id) 
-	{ 
-		if (id == HOT_INTERFACE) 
-			return (IHoudiniOcean*)this; 
-		else 
+	BaseInterface* GetInterface(Interface_ID id)
+	{
+		if (id == HOT_INTERFACE)
+			return (IHoudiniOcean*)this;
+		else
 			return Modifier::GetInterface(id);
-	} 
+	}
 	*/
 
 	// From Modifier
 	//ChannelMask ChannelsUsed()  {return GEOM_CHANNEL | TOPO_CHANNEL | PART_VERTCOLOR | SELECT_CHANNEL | SUBSEL_TYPE_CHANNEL;}
 	//ChannelMask ChannelsChanged() {return GEOM_CHANNEL | PART_VERTCOLOR;}
-	ChannelMask ChannelsUsed()  { return GEOM_CHANNEL|TOPO_CHANNEL|SELECT_CHANNEL|SUBSEL_TYPE_CHANNEL; }
+	ChannelMask ChannelsUsed() { return GEOM_CHANNEL | TOPO_CHANNEL | SELECT_CHANNEL | SUBSEL_TYPE_CHANNEL; }
 	ChannelMask ChannelsChanged() { return GEOM_CHANNEL; }
 
 	Class_ID InputType() { return defObjectClassID; } // DEFORM Mesh only
 
-	void ModifyObject(TimeValue t, ModContext &mc, ObjectState *os, INode *node);
-	void ModifyTriObject(TimeValue t, ModContext &mc, TriObject* tobj, Interval iv, Point2 center);
+	void ModifyObject(TimeValue t, ModContext& mc, ObjectState* os, INode* node);
+	void ModifyTriObject(TimeValue t, ModContext& mc, TriObject* tobj, Interval iv, Point2 center);
 	//void ModifyPolyObject(TimeValue t, ModContext &mc, PolyObject *pobj);
 
 	// IO
-	IOResult Load(ILoad *iload);
-	IOResult Save(ISave *isave);
+	IOResult Load(ILoad* iload);
+	IOResult Save(ISave* isave);
 
 	// Center Gizmo
-	int HitTest(TimeValue t, INode* inode, int type, int crossing, int flags, IPoint2 *p, ViewExp *vpt, ModContext* mc);
-	int Display(TimeValue t, INode* inode, ViewExp *vpt, int flagst, ModContext *mc);
-	void GetWorldBoundBox(TimeValue t,INode* inode, ViewExp *vpt, Box3& box, ModContext *mc);		
+	int HitTest(TimeValue t, INode* inode, int type, int crossing, int flags, IPoint2* p, ViewExp* vpt, ModContext* mc);
+	int Display(TimeValue t, INode* inode, ViewExp* vpt, int flagst, ModContext* mc);
+	void GetWorldBoundBox(TimeValue t, INode* inode, ViewExp* vpt, Box3& box, ModContext* mc);
 	void Move(TimeValue t, Matrix3& partm, Matrix3& tmAxis, Point3& val, BOOL localOrigin);
 	void Rotate(TimeValue t, Matrix3& partm, Matrix3& tmAxis, Quat& val, BOOL localOrigin);
-	void Scale(TimeValue t, Matrix3& partm, Matrix3& tmAxis, Point3& val, BOOL localOrigin);	
-	BOOL AssignController(Animatable *control,int subAnim);
+	void Scale(TimeValue t, Matrix3& partm, Matrix3& tmAxis, Point3& val, BOOL localOrigin);
+	BOOL AssignController(Animatable* control, int subAnim);
 	int SubNumToRefNum(int subNum);
-	void GetSubObjectCenters(SubObjAxisCallback *cb,TimeValue t,INode *node,ModContext *mc);
-	void GetSubObjectTMs(SubObjAxisCallback *cb,TimeValue t,INode *node,ModContext *mc);
+	void GetSubObjectCenters(SubObjAxisCallback* cb, TimeValue t, INode* node, ModContext* mc);
+	void GetSubObjectTMs(SubObjAxisCallback* cb, TimeValue t, INode* node, ModContext* mc);
 	void ActivateSubobjSel(int level, XFormModes& modes);
 	int NumSubObjTypes();
-	ISubObjType *GetSubObjType(int i);
-	
+	ISubObjType* GetSubObjType(int i);
+
 	// Reference Management
 	int NumRefs() { return 2; }
 	RefTargetHandle GetReference(int i);
-	
+
 #if MAXVERSION < 2015 
 	RefResult NotifyRefChanged(Interval changeInt, RefTargetHandle hTarget, PartID& partID, RefMessage message);
 #else
@@ -221,9 +221,9 @@ private:
 	virtual void SetReference(int i, RefTargetHandle rtarg);
 
 public:
-	int NumSubs() {	return 2;	}
+	int NumSubs() { return 2; }
 
-	Animatable* SubAnim(int i) {		return GetReference(i);		}
+	Animatable* SubAnim(int i) { return GetReference(i); }
 
 #if MAXVERSION > 2021
 	// JW added: 2022+ adds localized flag 
@@ -258,7 +258,7 @@ public:
 
 	void UpdateOcean(TimeValue t);
 
-	Deformer& GetDeformer(TimeValue t, ModContext &mc, Point2 p);
+	Deformer& GetDeformer(TimeValue t, ModContext& mc, Point2 p);
 
 private:
 	bool updateNeeded;
@@ -278,19 +278,19 @@ private:
 
 protected:
 	// This is where all the wave action takes place
-	drw::Ocean        *_ocean;
-	drw::OceanContext *_ocean_context;
+	drw::Ocean* _ocean;
+	drw::OceanContext* _ocean_context;
 	float              _ocean_scale;
 
 	// If this is true we will create a new instance of drw::Ocean  next time it runs.
 	bool _ocean_needs_rebuild;
 };
 
-class HotDeformer: public Deformer
+class HotDeformer : public Deformer
 {
 public:
 	HotDeformer() {}
-	HotDeformer(drw::Ocean* _ocean, drw::OceanContext* _ocean_context, float globalScale, bool do_interpolation, bool do_chop, ModContext &mc, Point2 CenterOffset);
+	HotDeformer(drw::Ocean* _ocean, drw::OceanContext* _ocean_context, float globalScale, bool do_interpolation, bool do_chop, ModContext& mc, Point2 CenterOffset);
 
 #if MAX_VERSION_MAJOR >= 24
 	// non-constant version of Deformer::Map() is deprecated
@@ -301,37 +301,37 @@ public:
 
 
 private:
-	drw::Ocean        *_ocean;
-	drw::OceanContext *_ocean_context;
-	
+	drw::Ocean* _ocean;
+	drw::OceanContext* _ocean_context;
+
 	float envGlobalScale;
 	float oneOverGlobalScale;
-	
+
 	bool do_interpolation;
 	bool do_chop;
-	
+
 	Point2 CenterOffset;
 };
 
-class HotClassDesc:public ClassDesc2
+class HotClassDesc :public ClassDesc2
 {
 public:
 	int IsPublic() { return 1; }
-	void *Create(BOOL loading = FALSE) { return new HotMod; }
+	void* Create(BOOL loading = FALSE) { return new HotMod; }
 
 
-	const TCHAR *ClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
+	const TCHAR* ClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
 
 #if MAXVERSION > 2021
 	// JW added: Max 2022 SDK adds NonLocalizedClassName() to the class description
-	const TCHAR *NonLocalizedClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
+	const TCHAR* NonLocalizedClassName() { return GetString(IDS_RB_HOT_OSM_CLASS); }
 #endif	
 
 	SClass_ID SuperClassID() { return OSM_CLASS_ID; }
 	Class_ID ClassID() { return HOT4MAX_CLASS_ID; }
-	const TCHAR *Category() { return GetString(IDS_RB_HOTMOD);}
-	const TCHAR *InternalName()	{return _T("HotMod");}
-	HINSTANCE HInstance() {return hInstance;};
+	const TCHAR* Category() { return GetString(IDS_RB_HOTMOD); }
+	const TCHAR* InternalName() { return _T("HotMod"); }
+	HINSTANCE HInstance() { return hInstance; };
 };
 
 static HotClassDesc hotDesc;
@@ -344,7 +344,7 @@ ClassDesc* GetHotModDesc()
 class HotDlgProc : public ParamMap2UserDlgProc
 {
 public:
-	INT_PTR DlgProc(TimeValue t,IParamMap2* map,HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam);	
+	INT_PTR DlgProc(TimeValue t, IParamMap2* map, HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	void DeleteThis() {}
 };
 

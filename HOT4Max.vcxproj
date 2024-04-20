@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0FA468E9-898D-492D-830E-116F684BCB71}</ProjectGuid>
+    <ProjectName>HOT4Max</ProjectName>
+    <RootNamespace>hotOcean_Max</RootNamespace>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Hybrid-Max2025|x64">
+      <Configuration>Hybrid-Max2025</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2026|x64">
+      <Configuration>Release-Max2026</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2025|x64">
+      <Configuration>Release-Max2025</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2024|x64">
+      <Configuration>Release-Max2024</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2023|x64">
+      <Configuration>Release-Max2023</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2022|x64">
+      <Configuration>Release-Max2022</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2021|x64">
+      <Configuration>Release-Max2021</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2020|x64">
+      <Configuration>Release-Max2020</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2019|x64">
+      <Configuration>Release-Max2019</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2018|x64">
+      <Configuration>Release-Max2018</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Max2017|x64">
+      <Configuration>Release-Max2017</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(ProjectDir)propertysheets\MaxSDKSetup.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup>
+    <TargetName>$(ProjectName)_$(MaxSDKRelease)_$(PlatformTarget)</TargetName>
+    <TargetExt>.dlm</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="$(Configuration.Contains('Release'))">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\3rdParty;.\3rdParty\include;.\3rdParty\blitz;.\3rdParty\fftw-3.3.10\include;$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_USRDLL;HOTOCEAN_MAX_EXPORTS;MAXVERSION=$(MaxSDKRelease);NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <ModuleDefinitionFile>Hot4MAX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\3rdParty\fftw-3.3.10\lib;.\3rdParty\blitz\lib;$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ShowProgress>NotSet</ShowProgress>
+      <AdditionalDependencies>fftw3f.lib;blitz.lib;shell32.lib;comctl32.lib;assetmanagement.lib;bmm.lib;mnmath.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;poly.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="$(Configuration.Contains('Hybrid')) OR $(Configuration.Contains('Debug'))">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\3rdParty;.\3rdParty\include;.\3rdParty\blitz;.\3rdParty\fftw-3.3.10\include;$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_USRDLL;HOTOCEAN_MAX_EXPORTS;MAXVERSION=$(MaxSDKRelease);NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <!-- Clear private debug symbol setting that gets set by Max SDK's property sheet -->
+      <StripPrivateSymbols>
+      </StripPrivateSymbols>
+      <ModuleDefinitionFile>Hot4MAX.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>.\3rdParty\fftw-3.3.10\lib;.\3rdParty\blitz\lib;$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ShowProgress>NotSet</ShowProgress>
+      <AdditionalDependencies>fftw3f.lib;blitz.lib;shell32.lib;comctl32.lib;assetmanagement.lib;bmm.lib;mnmath.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;poly.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>	
+		<PostBuildEvent>
+		  <Command>xcopy /q /y >nul "$(ProjectDir)license-fftw.txt" "$(ProjectDir)$(OutDir)"
+%(Command)</Command>
+		</PostBuildEvent>		
+  </ItemDefinitionGroup>	
+  <ItemGroup>
+    <ClCompile Include="src\hot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\hot.h" />
+    <ClInclude Include="src\paramblock.h" />
+    <ClInclude Include="src\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResoceCompile Include="src\hot.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\res\hot4max.bmp" />
+    <Image Include="src\res\twitter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\hot.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="license-fftw.txt">
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
