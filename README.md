@@ -6,11 +6,11 @@ Josef 'spacefrog' Wienerroither, spacefrog@chello.at
 
 
 Changes
-    complete vs project restructure
-	3ds Max 2025 build added
+  Visualstudio project restructure 
+	3ds Max 2025 SDK compatibility
 	3ds Max 2023 and 3ds Max 2024 builds added
-    removed dependency on external libfftw3f-3.dll, plugin now uses statically linked library
-    previously added libfftw3f-3.dll in 3ds Max root can/should be removed
+    removed libfftw3f-3.dll dependency (now statically linked )
+    Note: remove libfftw3f-3.dll from 3ds Max root folder ...
 
 Installation
 
