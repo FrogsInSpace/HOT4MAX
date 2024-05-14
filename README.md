@@ -1,7 +1,7 @@
 Author
 Guillaume Plourde, gplourde@gmail.com
 
-3ds Max 2022+ compatibility and statically linked fftw
+3ds Max 2022+ compatibility and statically linked FFTW libray: 
 Josef 'spacefrog' Wienerroither, spacefrog@chello.at
 
 
