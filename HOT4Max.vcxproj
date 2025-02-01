@@ -108,12 +108,19 @@
       <AdditionalDependencies>fftw3f.lib;blitz.lib;shell32.lib;comctl32.lib;assetmanagement.lib;bmm.lib;mnmath.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;poly.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup>	
-		<PostBuildEvent>
-		  <Command>xcopy /q /y >nul "$(ProjectDir)license-fftw.txt" "$(ProjectDir)$(OutDir)"
+  <!-- clear RunMUIRCT postbuild event -->
+  <ItemDefinitionGroup>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <PostBuildEvent>
+      <Command>xcopy /q /y &gt;nul "$(ProjectDir)license-fftw.txt" "$(ProjectDir)$(OutDir)"
 %(Command)</Command>
-		</PostBuildEvent>		
-  </ItemDefinitionGroup>	
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\hot.cpp" />
   </ItemGroup>
